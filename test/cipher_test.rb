@@ -12,17 +12,17 @@ class CipherTest < Minitest::Test
     @offset = Offset.new(110588)
     @shift = Shift.new
     @cipher = Cipher.new
-
     @key.random_number
     @key.assign_values
-
     @offset.date_squared
     @offset.last_four
     @offset.assign_offset_values
-
     @shift.shift(
       @key.a_key, @offset.a_offset, @key.b_key, @offset.b_offset,
       @key.c_key, @offset.c_offset, @key.d_key, @offset.d_offset
+    )
+    @cipher.rotate_alphabet_amount(
+      @shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift
     )
   end
 
@@ -38,5 +38,16 @@ class CipherTest < Minitest::Test
   def test_split_message
     expected = [["h", "o", "r"], ["e", " ", "l"], ["l", "w", "d"], ["l", "o"]]
     assert_equal expected, @cipher.split_message('Hello World')
+  end
+
+  def test_rotate
+    assert @cipher.a_change.is_a? Numeric
+    assert @cipher.b_change.is_a? Numeric
+    assert @cipher.c_change.is_a? Numeric
+    assert @cipher.d_change.is_a? Numeric
+  end
+
+  def test_new_letter
+    assert 4, @cipher.new_letters
   end
 end
