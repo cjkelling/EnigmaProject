@@ -4,7 +4,7 @@ class Offset
   attr_reader :date, :a_offset, :b_offset, :c_offset, :d_offset
 
   def initialize
-    @date = Time.now.strftime("%m/%d/%Y").delete("/").to_i
+    @date = Time.now.strftime('%m/%d/%Y').delete('/').to_i
   end
 
   def date_squared

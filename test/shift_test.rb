@@ -2,6 +2,8 @@ require './test/test_helper'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/shift'
+require './lib/key'
+require './lib/offset'
 
 class ShiftTest < Minitest::Test
   def setup
@@ -16,5 +18,10 @@ class ShiftTest < Minitest::Test
     expected = ('a'..'z').to_a << ' '
     assert_equal expected, @shift.character_set
     p @shift.character_set
+  end
+
+  def test_set_shifts
+    @shift.set_shifts
+    assert_equal 2, @shift.a_shift
   end
 end
