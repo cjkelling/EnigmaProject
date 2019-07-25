@@ -14,11 +14,17 @@ class OffsetTest < Minitest::Test
   end
 
   def test_date
-    expected = Time.now.strftime("%m/%d/%Y").delete("/").to_i
+    expected = Time.now.strftime('%m/%d/%Y').delete('/').to_i
     assert_equal expected, @offset.date
   end
 
   def test_squared
-    assert_equal 5, @offset.date_squared
+    expected = (@offset.date * @offset.date)
+    assert_equal expected, @offset.date_squared
+  end
+
+  def test_last_four
+    @offset.date_squared
+    assert_equal 1234, @offset.last_four
   end
 end

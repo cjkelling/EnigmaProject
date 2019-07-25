@@ -13,10 +13,12 @@ class Offset
   end
 
   def date_squared
-    @squared = (@date * @date)
+    @squared += (@date * @date)
+  end
+
+  def last_four
+    @squared
   end
 end
-# todays date
-# squared
 # last 4 digits
 # equates to a b c d
