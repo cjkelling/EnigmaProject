@@ -1,7 +1,7 @@
 require 'date'
 
 class Offset
-  attr_reader :date, :a_key_offset, :b_key_offset, :c_key_offset, :d_key_offset
+  attr_reader :date, :a_offset, :b_offset, :c_offset, :d_offset
 
   def initialize
     @date = Time.now.strftime("%m/%d/%Y").delete("/").to_i
@@ -16,9 +16,9 @@ class Offset
   end
 
   def assign_offset_values
-    @a_key_offset = @square[0]
-    @b_key_offset = @square[1]
-    @c_key_offset = @square[2]
-    @d_key_offset = @square[3]
+    @a_offset = @square[0]
+    @b_offset = @square[1]
+    @c_offset = @square[2]
+    @d_offset = @square[3]
   end
 end

@@ -32,9 +32,9 @@ class OffsetTest < Minitest::Test
     @offset.date_squared
     @offset.last_four
     @offset.assign_offset_values
-    assert @offset.a_key_offset == @offset.last_four[0]
-    assert @offset.b_key_offset == @offset.last_four[1]
-    assert @offset.c_key_offset == @offset.last_four[2]
-    assert @offset.d_key_offset == @offset.last_four[3]
+    assert @offset.a_offset == @offset.last_four[0]
+    assert @offset.b_offset == @offset.last_four[1]
+    assert @offset.c_offset == @offset.last_four[2]
+    assert @offset.d_offset == @offset.last_four[3]
   end
 end
