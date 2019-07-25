@@ -2,9 +2,12 @@ require './test/test_helper'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/enigma'
+require './lib/key'
+require './lib/offset'
+require './lib/shit'
 require 'date'
 
-class StatTrackerTest < Minitest::Test
+class EnigmaTest < Minitest::Test
   def setup
     @enigma = Enigma.new
   end
