@@ -7,18 +7,18 @@ require 'date'
 class KeyTest < Minitest::Test
   def setup
     @key = Key.new
-    @num = []
   end
 
   def test_it_exists
     assert_instance_of Key, @key
   end
 
-  def test_random_5_digits_generation
-    assert @key.random_number == 5
+  def test_5_digit_generation
+    assert @key.random_number.count == 5
   end
 
   def test_assign_values
+    @num = []
     @key.random_number
     @key.assign_values
     assert @a_key == @num[0..1]

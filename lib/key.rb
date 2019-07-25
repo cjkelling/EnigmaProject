@@ -11,6 +11,7 @@ class Key
 
   def random_number
     5.times { @num << rand(0..9) }
+    @num
   end
 
   def assign_values
