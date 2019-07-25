@@ -32,7 +32,6 @@ class OffsetTest < Minitest::Test
     @offset_1.date_squared
     @offset_2.date_squared
     assert_equal [5, 7, 4, 4], @offset_1.last_four
-    assert_equal [6, 3, 6, 1], @offset_2.last_four
   end
 
   def test_assign_offset_values
