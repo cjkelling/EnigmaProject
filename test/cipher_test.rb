@@ -35,7 +35,8 @@ class CipherTest < Minitest::Test
     assert_equal expected, @cipher.character_set
   end
 
-  def test_encrypt_alphabet
-    assert_equal "abcd", @cipher.encrypt_alphabet("Hello World")
+  def test_split_message
+    expected = [["h", "o", "r"], ["e", " ", "l"], ["l", "w", "d"], ["l", "o"]]
+    assert_equal expected, @cipher.split_message('Hello World')
   end
 end
