@@ -2,7 +2,6 @@ require './test/test_helper'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/key'
-require 'date'
 
 class KeyTest < Minitest::Test
   def setup
@@ -20,9 +19,9 @@ class KeyTest < Minitest::Test
   def test_assign_values
     @key.random_number
     @key.assign_values
-    assert @key.a_key == @key.num[0..1]
-    assert @key.b_key == @key.num[1..2]
-    assert @key.c_key == @key.num[2..3]
-    assert @key.d_key == @key.num[3..4]
+    assert @key.a_key == @key.num[0..1].join.to_i
+    assert @key.b_key == @key.num[1..2].join.to_i
+    assert @key.c_key == @key.num[2..3].join.to_i
+    assert @key.d_key == @key.num[3..4].join.to_i
   end
 end

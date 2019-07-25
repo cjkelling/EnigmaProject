@@ -6,25 +6,42 @@ require 'date'
 
 class OffsetTest < Minitest::Test
   def setup
-    @offset = Offset.new
+    @offset_1 = Offset.new(110588)
+    @offset_2 = Offset.new
   end
 
   def test_it_exists
-    assert_instance_of Offset, @offset
+    assert_instance_of Offset, @offset_1
+    assert_instance_of Offset, @offset_2
   end
 
   def test_date
     expected = Time.now.strftime('%m/%d/%Y').delete('/').to_i
-    assert_equal expected, @offset.date
+    assert_equal 110588, @offset_1.date
+    assert_equal expected, @offset_2.date
   end
 
   def test_squared
-    expected = (@offset.date * @offset.date)
-    assert_equal expected, @offset.date_squared
+    expected_1 = (@offset_1.date * @offset_1.date)
+    expected_2 = (@offset_2.date * @offset_2.date)
+    assert_equal expected_1, @offset_1.date_squared
+    assert_equal expected_2, @offset_2.date_squared
   end
 
   def test_last_four
-    @offset.date_squared
-    assert_equal 1234, @offset.last_four
+    @offset_1.date_squared
+    @offset_2.date_squared
+    assert_equal [5, 7, 4, 4], @offset_1.last_four
+    assert_equal [6, 3, 6, 1], @offset_2.last_four
+  end
+
+  def test_assign_offset_values
+    @offset_1.date_squared
+    @offset_1.last_four
+    @offset_1.assign_offset_values
+    assert @offset_1.a_offset == @offset_1.last_four[0]
+    assert @offset_1.b_offset == @offset_1.last_four[1]
+    assert @offset_1.c_offset == @offset_1.last_four[2]
+    assert @offset_1.d_offset == @offset_1.last_four[3]
   end
 end

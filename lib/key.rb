@@ -3,10 +3,6 @@ class Key
 
   def initialize
     @num = []
-    @a_key = []
-    @b_key = []
-    @c_key = []
-    @d_key = []
   end
 
   def random_number
@@ -15,9 +11,9 @@ class Key
   end
 
   def assign_values
-    @a_key.push(@num[0], @num[1]).join.to_i
-    @b_key.push(@num[1], @num[2]).join.to_i
-    @c_key.push(@num[2], @num[3]).join.to_i
-    @d_key.push(@num[3], @num[4]).join.to_i
+    @a_key = (@num[0..1]).join.to_i
+    @b_key = (@num[1..2]).join.to_i
+    @c_key = (@num[2..3]).join.to_i
+    @d_key = (@num[3..4]).join.to_i
   end
 end
