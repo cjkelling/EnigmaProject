@@ -12,6 +12,10 @@ class KeyTest < Minitest::Test
     assert_instance_of Key, @key
   end
 
+  def test_attributes
+    assert_equal [], @key.num
+  end
+
   def test_5_digit_generation
     assert @key.random_number.count == 5
   end
