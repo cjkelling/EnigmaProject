@@ -1,19 +1,10 @@
 class Shift
-  attr_reader :character_set, :a_shift, :b_shift, :c_shift, :d_shift
+  attr_reader :a_shift, :b_shift, :c_shift, :d_shift
 
-  def set_a_shift(key, offset)
-    @a_shift = (key + offset)
-  end
-
-  def set_b_shift(key, offset)
-    @b_shift = (key + offset)
-  end
-
-  def set_c_shift(key, offset)
-    @c_shift = (key + offset)
-  end
-
-  def set_d_shift(key, offset)
-    @d_shift = (key + offset)
+  def shift(*args)
+    @a_shift = (args[0]) + (args[1])
+    @b_shift = (args[2]) + (args[3])
+    @c_shift = (args[4]) + (args[5])
+    @d_shift = (args[6]) + (args[7])
   end
 end
