@@ -21,9 +21,6 @@ class CipherTest < Minitest::Test
       @key.a_key, @offset.a_offset, @key.b_key, @offset.b_offset,
       @key.c_key, @offset.c_offset, @key.d_key, @offset.d_offset
     )
-    @cipher.rotate_alphabet_amount(
-      @shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift
-    )
   end
 
   def test_it_exists
@@ -36,18 +33,26 @@ class CipherTest < Minitest::Test
   end
 
   def test_split_message
-    expected = [["h", "o", "r"], ["e", " ", "l"], ["l", "w", "d"], ["l", "o"]]
+    expected = [["h", "o", "r"], ["e", " ", "l"], ["l", "w", "d"], ["l", "o", nil]]
     assert_equal expected, @cipher.split_message('Hello World')
   end
 
   def test_rotate
+    @cipher.rotate_alphabet_amount(
+      @shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift
+    )
+
     assert @cipher.a_change.is_a? Numeric
     assert @cipher.b_change.is_a? Numeric
     assert @cipher.c_change.is_a? Numeric
     assert @cipher.d_change.is_a? Numeric
   end
 
-  def test_new_letter
-    assert 4, @cipher.new_letters
+  def test_new_letters
+    @cipher.split_message('Hello World')
+    @cipher.rotate_alphabet_amount(
+      @shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift
+    )
+    assert_equal [['u'], ['x']], @cipher.new_letters
   end
 end

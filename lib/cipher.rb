@@ -1,5 +1,6 @@
 class Cipher
-  attr_reader :character_set, :a_change, :b_change, :c_change, :d_change
+  attr_reader :character_set, :a_change, :b_change, :c_change, :d_change,
+              :a_array, :b_array, :c_array, :d_array
 
   def initialize
     @character_set = ('a'..'z').to_a << ' '
@@ -17,7 +18,7 @@ class Cipher
       @c_array << c
       @d_array << d
     end
-    [@a_array.compact, @b_array.compact, @c_array.compact, @d_array.compact]
+    [@a_array, @b_array, @c_array, @d_array]
   end
 
   def rotate_alphabet_amount(*args)
@@ -28,10 +29,13 @@ class Cipher
   end
 
   def new_letters
-    # p shift_map = @character_set.zip(@character_set.rotate(a_change)).to_h
-    # @a_array.each do |array|
-    #   a_new << (array.chars.map { |ch| shift_map[ch] })
-    # end
-    # p a_new
+    shift_a = @character_set.zip(@character_set.rotate(@a_change)).to_h
+    shift_b = @character_set.zip(@character_set.rotate(@b_change)).to_h
+    shift_c = @character_set.zip(@character_set.rotate(@c_change)).to_h
+    shift_d = @character_set.zip(@character_set.rotate(@d_change)).to_h
+    @a_array.compact.map { |array| array.chars.map { |ch| shift_a[ch] } }
+    @b_array.compact.map { |array| array.chars.map { |ch| shift_b[ch] } }
+    @c_array.compact.map { |array| array.chars.map { |ch| shift_c[ch] } }
+    @d_array.compact.map { |array| array.chars.map { |ch| shift_d[ch] } }
   end
 end
