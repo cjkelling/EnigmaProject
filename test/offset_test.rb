@@ -30,7 +30,6 @@ class OffsetTest < Minitest::Test
 
   def test_last_four
     @offset_1.date_squared
-    @offset_2.date_squared
     assert_equal [5, 7, 4, 4], @offset_1.last_four
   end
 
