@@ -28,10 +28,10 @@ class KeyTest < Minitest::Test
   def test_assign_values
     @key_1.random_number
     @key_1.assign_values
-    assert @key_1.a_key == @key_1.num[0..1].join
-    assert @key_1.b_key == @key_1.num[1..2].join
-    assert @key_1.c_key == @key_1.num[2..3].join
-    assert @key_1.d_key == @key_1.num[3..4].join
+    assert_equal @key_1.num[0..1].join, @key_1.a_key
+    assert_equal @key_1.num[1..2].join, @key_1.b_key
+    assert_equal @key_1.num[2..3].join, @key_1.c_key
+    assert_equal @key_1.num[3..4].join, @key_1.d_key
 
     @key_2.assign_values
     assert_equal '02', @key_2.a_key

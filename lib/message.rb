@@ -1,6 +1,5 @@
 class Message
-  attr_reader :message, :character_set, :a_change, :b_change, :c_change,
-              :d_change, :a_array, :b_array, :c_array, :d_array
+  attr_reader :message, :character_set, :a_array, :b_array, :c_array, :d_array
 
   def initialize(message)
     @message = message
@@ -22,21 +21,14 @@ class Message
     [@a_array, @b_array, @c_array, @d_array]
   end
 
-  def rotate_alphabet_amount(*args)
-    @a_change = args[0]
-    @b_change = args[1]
-    @c_change = args[2]
-    @d_change = args[3]
-  end
-
-  def new_letters
-    shift_a = @character_set.zip(@character_set.rotate(@a_change)).to_h
-    shift_b = @character_set.zip(@character_set.rotate(@b_change)).to_h
-    shift_c = @character_set.zip(@character_set.rotate(@c_change)).to_h
-    shift_d = @character_set.zip(@character_set.rotate(@d_change)).to_h
-    @a_array.compact.map { |array| array.chars.map { |ch| shift_a[ch] } }
-    @b_array.compact.map { |array| array.chars.map { |ch| shift_b[ch] } }
-    @c_array.compact.map { |array| array.chars.map { |ch| shift_c[ch] } }
-    @d_array.compact.map { |array| array.chars.map { |ch| shift_d[ch] } }
+  def new_letters(one, two, three, four)
+    shift_a = @character_set.zip(@character_set.rotate(one.to_i)).to_h
+    shift_b = @character_set.zip(@character_set.rotate(two.to_i)).to_h
+    shift_c = @character_set.zip(@character_set.rotate(three.to_i)).to_h
+    shift_d = @character_set.zip(@character_set.rotate(four.to_i)).to_h
+    @a_array = @a_array.compact.map { |array| array.chars.map { |ch| shift_a[ch] } }
+    @b_array = @b_array.compact.map { |array| array.chars.map { |ch| shift_b[ch] } }
+    @c_array = @c_array.compact.map { |array| array.chars.map { |ch| shift_c[ch] } }
+    @d_array = @d_array.compact.map { |array| array.chars.map { |ch| shift_d[ch] } }
   end
 end
