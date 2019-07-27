@@ -2,7 +2,6 @@ require './test/test_helper'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/offset'
-require 'date'
 
 class OffsetTest < Minitest::Test
   def setup
@@ -37,9 +36,9 @@ class OffsetTest < Minitest::Test
     @offset_1.date_squared
     @offset_1.last_four
     @offset_1.assign_offset_values
-    assert @offset_1.a_offset == @offset_1.last_four[0]
-    assert @offset_1.b_offset == @offset_1.last_four[1]
-    assert @offset_1.c_offset == @offset_1.last_four[2]
-    assert @offset_1.d_offset == @offset_1.last_four[3]
+    assert_equal '5', @offset_1.a_offset
+    assert_equal '7', @offset_1.b_offset
+    assert_equal '4', @offset_1.c_offset
+    assert_equal '4', @offset_1.d_offset
   end
 end

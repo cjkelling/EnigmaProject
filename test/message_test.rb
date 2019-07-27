@@ -4,14 +4,14 @@ require 'minitest/pride'
 require './lib/key'
 require './lib/offset'
 require './lib/shift'
-require './lib/cipher'
+require './lib/message'
 
 class CipherTest < Minitest::Test
   def setup
     @key = Key.new
     @offset = Offset.new(110588)
     @shift = Shift.new
-    @cipher = Cipher.new
+    @message = Message.new('Hello World')
     @key.random_number
     @key.assign_values
     @offset.date_squared
@@ -24,35 +24,35 @@ class CipherTest < Minitest::Test
   end
 
   def test_it_exists
-    assert_instance_of Cipher, @cipher
+    assert_instance_of Message, @message
   end
 
   def test_character_set
     expected = ('a'..'z').to_a << ' '
-    assert_equal expected, @cipher.character_set
+    assert_equal expected, @message.character_set
   end
 
   def test_split_message
     expected = [["h", "o", "r"], ["e", " ", "l"], ["l", "w", "d"], ["l", "o", nil]]
-    assert_equal expected, @cipher.split_message('Hello World')
+    assert_equal expected, @message.split_message
   end
 
   def test_rotate
-    @cipher.rotate_alphabet_amount(
+    @message.rotate_alphabet_amount(
       @shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift
     )
 
-    assert @cipher.a_change.is_a? Numeric
-    assert @cipher.b_change.is_a? Numeric
-    assert @cipher.c_change.is_a? Numeric
-    assert @cipher.d_change.is_a? Numeric
+    assert @message.a_change.is_a? Numeric
+    assert @message.b_change.is_a? Numeric
+    assert @message.c_change.is_a? Numeric
+    assert @message.d_change.is_a? Numeric
   end
 
   def test_new_letters
-    @cipher.split_message('Hello World')
-    @cipher.rotate_alphabet_amount(
+    @message.split_message
+    @message.rotate_alphabet_amount(
       @shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift
     )
-    assert_equal [['u'], ['x']], @cipher.new_letters
+    assert_equal [['u'], ['x']], @message.new_letters
   end
 end

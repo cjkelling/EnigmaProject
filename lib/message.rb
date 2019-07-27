@@ -1,8 +1,9 @@
-class Cipher
-  attr_reader :character_set, :a_change, :b_change, :c_change, :d_change,
-              :a_array, :b_array, :c_array, :d_array
+class Message
+  attr_reader :message, :character_set, :a_change, :b_change, :c_change,
+              :d_change, :a_array, :b_array, :c_array, :d_array
 
-  def initialize
+  def initialize(message)
+    @message = message
     @character_set = ('a'..'z').to_a << ' '
     @a_array = []
     @b_array = []
@@ -10,8 +11,8 @@ class Cipher
     @d_array = []
   end
 
-  def split_message(message)
-    array = message.to_s.downcase.split('')
+  def split_message
+    array = @message.downcase.split('')
     array.each_slice(4) do |a, b, c, d|
       @a_array << a
       @b_array << b

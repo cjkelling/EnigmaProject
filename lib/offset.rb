@@ -19,9 +19,9 @@ class Offset
   end
 
   def assign_offset_values
-    @a_offset = @square[0]
-    @b_offset = @square[1]
-    @c_offset = @square[2]
-    @d_offset = @square[3]
+    @a_offset = @square[0].to_s
+    @b_offset = @square[1].to_s
+    @c_offset = @square[2].to_s
+    @d_offset = @square[3].to_s
   end
 end

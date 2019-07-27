@@ -7,9 +7,9 @@ require './lib/offset'
 
 class ShiftTest < Minitest::Test
   def setup
+    @key = Key.new('72693')
+    @offset = Offset.new(110588)
     @shift = Shift.new
-    @key = Key.new
-    @offset = Offset.new
   end
 
   def test_it_exists
@@ -17,7 +17,6 @@ class ShiftTest < Minitest::Test
   end
 
   def test_shift
-    @key.random_number
     @key.assign_values
     @offset.date_squared
     @offset.last_four
@@ -28,9 +27,9 @@ class ShiftTest < Minitest::Test
       @key.c_key, @offset.c_offset, @key.d_key, @offset.d_offset
     )
 
-    assert @shift.a_shift.is_a? Numeric
-    assert @shift.b_shift.is_a? Numeric
-    assert @shift.c_shift.is_a? Numeric
-    assert @shift.d_shift.is_a? Numeric
+    assert_equal 2, @shift.a_shift
+    assert_equal 2, @shift.b_shift
+    assert_equal 2, @shift.c_shift
+    assert_equal 2, @shift.d_shift
   end
 end
