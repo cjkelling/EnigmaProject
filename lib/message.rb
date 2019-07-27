@@ -31,4 +31,8 @@ class Message
     @c_array = @c_array.compact.map { |array| array.chars.map { |ch| shift_c[ch] } }
     @d_array = @d_array.compact.map { |array| array.chars.map { |ch| shift_d[ch] } }
   end
+
+  def recombine_to_ciphertext
+
+  end
 end

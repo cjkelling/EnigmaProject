@@ -44,5 +44,12 @@ class CipherTest < Minitest::Test
     @message.split_message
     @message.new_letters(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
     assert_equal [["d"], ["k"], ["n"]], @message.a_array
+    assert_equal [["k"], ["f"], ["r"]], @message.b_array
+    assert_equal [["d"], ["o"], ["w"]], @message.c_array
+    assert_equal [["a"], ["d"]], @message.d_array
+  end
+
+  def test_making_ciphertext
+    assert_equal "dkdakfodnrw", @message.recombine_to_ciphertext
   end
 end
