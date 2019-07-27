@@ -50,6 +50,8 @@ class CipherTest < Minitest::Test
   end
 
   def test_making_ciphertext
+    @message.split_message
+    @message.new_letters(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
     assert_equal "dkdakfodnrw", @message.recombine_to_ciphertext
   end
 end

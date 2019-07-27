@@ -33,6 +33,6 @@ class Message
   end
 
   def recombine_to_ciphertext
-
+    @a_array.zip(@b_array).zip(@c_array).zip(@d_array).flatten.join
   end
 end
