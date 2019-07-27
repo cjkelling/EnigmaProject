@@ -10,7 +10,7 @@ class CipherTest < Minitest::Test
   def setup
     @message = Message.new('Hello World')
     @key = Key.new('72693')
-    @offset = Offset.new(110588)
+    @offset = Offset.new('110588')
     @shift = Shift.new
     @key.assign_values
     @offset.date_squared

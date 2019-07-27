@@ -5,7 +5,7 @@ require './lib/offset'
 
 class OffsetTest < Minitest::Test
   def setup
-    @offset_1 = Offset.new(110588)
+    @offset_1 = Offset.new('110588')
     @offset_2 = Offset.new
   end
 
@@ -16,7 +16,7 @@ class OffsetTest < Minitest::Test
 
   def test_date
     expected = Time.now.strftime('%m/%d/%Y').delete('/').to_i
-    assert_equal 110588, @offset_1.date
+    assert_equal '110588', @offset_1.date
     assert_equal expected, @offset_2.date
   end
 

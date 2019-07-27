@@ -5,13 +5,11 @@ class Offset
 
   def initialize(date = 0)
     @date = date
-    if @date.zero?
-      @date = Time.now.strftime('%m/%d/%Y').delete('/').to_i
-    end
+    @date = Time.now.strftime('%m/%d/%Y').delete('/').to_i if @date == 0
   end
 
   def date_squared
-    @squared = (@date * @date)
+    @squared = (@date.to_i * @date.to_i)
   end
 
   def last_four

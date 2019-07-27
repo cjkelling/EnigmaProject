@@ -8,7 +8,7 @@ require './lib/offset'
 class ShiftTest < Minitest::Test
   def setup
     @key = Key.new('02693')
-    @offset = Offset.new(110588)
+    @offset = Offset.new('110588')
     @shift = Shift.new
   end
 
