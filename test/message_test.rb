@@ -8,7 +8,7 @@ require './lib/message'
 
 class CipherTest < Minitest::Test
   def setup
-    @message = Message.new('Hello World')
+    @message = Message.new
     @key = Key.new('72693')
     @offset = Offset.new('110588')
     @shift = Shift.new
@@ -37,11 +37,11 @@ class CipherTest < Minitest::Test
 
   def test_split_message
     expected = [["h", "o", "r"], ["e", " ", "l"], ["l", "w", "d"], ["l", "o", nil]]
-    assert_equal expected, @message.split_message
+    assert_equal expected, @message.split_message('Hello World')
   end
 
   def test_new_letters
-    @message.split_message
+    @message.split_message('Hello World')
     @message.new_letters(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
     assert_equal [["d"], ["k"], ["n"]], @message.a_array
     assert_equal [["k"], ["f"], ["r"]], @message.b_array
@@ -50,8 +50,24 @@ class CipherTest < Minitest::Test
   end
 
   def test_making_ciphertext
-    @message.split_message
+    @message.split_message('Hello World')
     @message.new_letters(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
-    assert_equal "dkdakfodnrw", @message.recombine_to_ciphertext
+    assert_equal 'dkdakfodnrw', @message.recombine_to_ciphertext
+  end
+
+  def test_new_letters_reverse
+    @message.split_message('dkdakfodnrw')
+    @message.new_letters_reverse(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+    assert_equal [["h"], ["o"], ["r"]], @message.a_array
+    assert_equal [["e"], [" "], ["l"]], @message.b_array
+    assert_equal [["l"], ["w"], ["d"]], @message.c_array
+    assert_equal [["l"], ["o"]], @message.d_array
+  end
+
+  def test_return_ciphertext_to_original_message
+    @message.split_message('dkdakfodnrw')
+    @message.new_letters_reverse(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+    @message.recombine_to_ciphertext
+    assert_equal 'hello world', @message.original_message
   end
 end
