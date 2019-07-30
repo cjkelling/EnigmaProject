@@ -5,16 +5,15 @@ require './lib/enigma'
 require './lib/key'
 require './lib/offset'
 require './lib/shift'
-require './lib/message'
+require './lib/rotate_message'
 require 'date'
 
 class EnigmaTest < Minitest::Test
   def setup
-    @enigma = Enigma.new
-    @key = Key.new('02715')
-    @offset = Offset.new('040895')
+    @key = Key.new('72693')
+    @offset = Offset.new('110588')
     @shift = Shift.new
-    @message = Message.new
+    @enigma = Enigma.new
     @key.assign_values
     @offset.date_squared
     @offset.last_four
@@ -29,27 +28,71 @@ class EnigmaTest < Minitest::Test
     assert_instance_of Enigma, @enigma
   end
 
+  def test_attributes
+    expected = ('a'..'z').to_a << ' '
+    assert_equal expected, @enigma.character_set
+    assert_equal [], @enigma.a_array
+    assert_equal [], @enigma.b_array
+    assert_equal [], @enigma.c_array
+    assert_equal [], @enigma.d_array
+  end
+
+  def test_split_message
+    expected = [["h", "o", "r"], ["e", " ", "l"], ["l", "w", "d"], ["l", "o", nil]]
+    assert_equal expected, @enigma.split_message('Hello World')
+  end
+
+  def test_letters_to_cipher
+    @enigma.split_message('Hello World')
+    @enigma.letters_to_cipher(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+    assert_equal [["d"], ["k"], ["n"]], @enigma.a_array
+    assert_equal [["k"], ["f"], ["r"]], @enigma.b_array
+    assert_equal [["d"], ["o"], ["w"]], @enigma.c_array
+    assert_equal [["a"], ["d"]], @enigma.d_array
+  end
+
+  def test_making_ciphertext
+    @enigma.split_message('Hello World')
+    @enigma.letters_to_cipher(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+    assert_equal 'dkdakfodnrw', @enigma.recombine_message
+  end
+
+  def test_cipher_to_original
+    @enigma.split_message('dkdakfodnrw')
+    @enigma.cipher_to_original(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+    assert_equal [["h"], ["o"], ["r"]], @enigma.a_array
+    assert_equal [["e"], [" "], ["l"]], @enigma.b_array
+    assert_equal [["l"], ["w"], ["d"]], @enigma.c_array
+    assert_equal [["l"], ["o"]], @enigma.d_array
+  end
+
+  def test_recombine_message
+    @enigma.split_message('dkdakfodnrw')
+    @enigma.cipher_to_original(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+    assert_equal 'hello world', @enigma.recombine_message
+  end
+
   def test_encrypt
-    @message.split_message('Hello World')
-    @message.new_letters(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
-    @message.recombine_to_ciphertext
+    @enigma.split_message('Hello World')
+    @enigma.letters_to_cipher(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+    @enigma.recombine_message
     expected = {
-      encryption: 'keder ohulw',
-      key: '02715',
-      date: '040895'
+      encryption: 'dkdakfodnrw',
+      key: '72693',
+      date: '110588'
     }
-    assert_equal expected, @enigma.encrypt(@message, @key.key, @offset.date)
+    assert_equal expected, @enigma.encrypt(@enigma, @key.key, @offset.date)
   end
 
   def test_decrypt
-    @message.split_message('keder ohulw')
-    @message.new_letters_reverse(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
-    @message.recombine_to_ciphertext
+    @enigma.split_message('dkdakfodnrw')
+    @enigma.cipher_to_original(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+    @enigma.recombine_message
     expected = {
       decryption: 'hello world',
-      key: '02715',
-      date: '040895'
+      key: '72693',
+      date: '110588'
     }
-    assert_equal expected, @enigma.decrypt(@message, @key.key, @offset.date)
+    assert_equal expected, @enigma.decrypt(@enigma, @key.key, @offset.date)
   end
 end
