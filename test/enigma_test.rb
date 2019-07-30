@@ -30,7 +30,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypt
-    @message.split_message('hello world')
+    @message.split_message('Hello World')
     @message.new_letters(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
     @message.recombine_to_ciphertext
     expected = {
