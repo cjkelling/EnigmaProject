@@ -1,7 +1,6 @@
 require './lib/key'
 require './lib/offset'
 require './lib/shift'
-require './lib/message'
 require './lib/enigma'
 
 array = File.readlines(ARGV[0]).map(&:chomp)
@@ -12,10 +11,9 @@ array = File.readlines(ARGV[0]).map(&:chomp)
 @key = Key.new(*@code)
 @offset = Offset.new(*@date)
 @shift = Shift.new
-@message = Message.new
 @enigma = Enigma.new
 
-p @key.random_number
+@key.random_number.join
 @key.assign_values
 @offset.date_squared
 @offset.last_four
@@ -25,11 +23,11 @@ p @key.random_number
   @key.c_key, @offset.c_offset, @key.d_key, @offset.d_offset
 )
 
-@message.split_message(@words)
-@message.new_letters(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
-@message.recombine_to_ciphertext
-@enigma.encrypt(@message, @key.key, @offset.date)
+@enigma.split_message(@words)
+@enigma.letters_to_cipher(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
+@enigma.recombine_message
+@enigma.encrypt(@enigma, @key.key, @offset.date)
 
-File.open(ARGV[1], 'w') { |encoded| encoded.write(@message.recombine_to_ciphertext) }
+File.open(ARGV[1], 'w') { |encoded| encoded.write(@enigma.recombine_message) }
 
 puts "Created '#{ARGV[1]}' with the key #{@key.num.join} and date #{@offset.date}"
