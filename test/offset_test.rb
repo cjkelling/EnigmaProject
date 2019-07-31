@@ -20,7 +20,7 @@ class OffsetTest < Minitest::Test
     assert_equal expected, @offset_2.date
   end
 
-  def test_squared\
+  def test_squared
     expected_2 = (@offset_2.date * @offset_2.date)
     assert_equal 12229705744, @offset_1.date_squared
     assert_equal expected_2, @offset_2.date_squared
