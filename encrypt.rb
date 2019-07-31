@@ -4,17 +4,18 @@ require './lib/shift'
 require './lib/message'
 require './lib/enigma'
 
-array = File.readlines 'top_secret.txt'
-@words = array[0].gsub("\n", '')
-@code = array[1].gsub("\n", '')
-@date = array[2].gsub("\n", '')
+array = File.readlines(ARGV[0]).map(&:chomp)
+@words = array[0]
+@code = array[1] unless array[1].nil?
+@date = array[2] unless array[2].nil?
 
-@key = Key.new(@code)
-@offset = Offset.new(@date)
+@key = Key.new(*@code)
+@offset = Offset.new(*@date)
 @shift = Shift.new
 @message = Message.new
 @enigma = Enigma.new
 
+p @key.random_number
 @key.assign_values
 @offset.date_squared
 @offset.last_four
@@ -27,6 +28,8 @@ array = File.readlines 'top_secret.txt'
 @message.split_message(@words)
 @message.new_letters(@shift.a_shift, @shift.b_shift, @shift.c_shift, @shift.d_shift)
 @message.recombine_to_ciphertext
-code = @enigma.encrypt(@message, @key.key, @offset.date)
+@enigma.encrypt(@message, @key.key, @offset.date)
 
-File.open('encoded.txt', 'w') { |encoded| encoded.write(code) }
+File.open(ARGV[1], 'w') { |encoded| encoded.write(@message.recombine_to_ciphertext) }
+
+puts "Created '#{ARGV[1]}' with the key #{@key.num.join} and date #{@offset.date}"
